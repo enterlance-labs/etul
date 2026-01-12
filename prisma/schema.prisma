@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TopicType {
+  DM
+  GROUP
+}
+
+model Topic {
+  id        Int       @id @default(autoincrement())
+  type      TopicType
+  sourceId  BigInt
+  threadId  Int
+  title     String    @db.VarChar(191)
+  createdAt DateTime  @default(now())
+
+  @@unique([type, sourceId])
+  @@index([sourceId])
+}
+
+model UserCache {
+  userId    BigInt   @id
+  label     String   @db.VarChar(191)
+  updatedAt DateTime @updatedAt
+}
+
+model ChatCache {
+  chatId    BigInt   @id
+  title     String   @db.VarChar(191)
+  username  String?  @db.VarChar(191)
+  updatedAt DateTime @updatedAt
+}
