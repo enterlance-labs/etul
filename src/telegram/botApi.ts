@@ -5,7 +5,7 @@ const BOT_BASE = `https://api.telegram.org/bot${BOT_TOKEN}`;
 async function botCall(method: string, payload: Record<string, unknown>) {
   const res = await fetch(`${BOT_BASE}/${method}`, {
     method: "POST", headers: { "content-type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(payload, (_k, v) => (typeof v === "bigint" ? v.toString() : v)),
   });
   const data = await res.json();
   if (!data.ok) throw new Error(`${method} ошибка: ${JSON.stringify(data)}`);

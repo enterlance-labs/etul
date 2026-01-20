@@ -12,10 +12,10 @@ enum TopicType {
 }
 
 model Topic {
-  id        Int       @id @default(autoincrement())
+  id        BigInt    @id @default(autoincrement())
   type      TopicType
   sourceId  BigInt
-  threadId  Int
+  threadId  BigInt
   title     String    @db.VarChar(191)
   createdAt DateTime  @default(now())
 
