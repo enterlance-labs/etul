@@ -6,32 +6,32 @@ datasource db {
   provider = "postgresql"
 }
 
-enum TopicType {
-  DM
-  GROUP
-}
-
 model Topic {
-  id        BigInt    @id @default(autoincrement())
-  type      TopicType
-  sourceId  BigInt
-  threadId  BigInt
-  title     String    @db.VarChar(191)
-  createdAt DateTime  @default(now())
+  id        BigInt   @id @default(autoincrement()) @map("id")
+  type      String   @map("type")
+  sourceId  BigInt   @map("sourceid")
+  threadId  BigInt   @map("threadid")
+  title     String   @map("title") @db.VarChar(191)
+  createdAt DateTime @default(now()) @map("createdat")
 
   @@unique([type, sourceId])
   @@index([sourceId])
+  @@map("Topic")
 }
 
 model UserCache {
-  userId    BigInt   @id
-  label     String   @db.VarChar(191)
-  updatedAt DateTime @updatedAt
+  userId    BigInt   @id @map("userid")
+  label     String   @map("label") @db.VarChar(191)
+  updatedAt DateTime @updatedAt @map("updatedat")
+
+  @@map("UserCache")
 }
 
 model ChatCache {
-  chatId    BigInt   @id
-  title     String   @db.VarChar(191)
-  username  String?  @db.VarChar(191)
-  updatedAt DateTime @updatedAt
+  chatId    BigInt   @id @map("chatid")
+  title     String   @map("title") @db.VarChar(191)
+  username  String?  @map("username") @db.VarChar(191)
+  updatedAt DateTime @updatedAt @map("updatedat")
+
+  @@map("ChatCache")
 }
